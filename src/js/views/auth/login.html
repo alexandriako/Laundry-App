@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<section class="section">
+  <div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+      <form name="login.loginForm" ng-submit="login.submit()" novalidate>
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <p class="control">
+            <input class="input" type="email" name="email" id="email" ng-model="login.credentials.email" required>
+          </p>
+          <div ng-messages="login.loginForm.email.$error" role="alert" ng-show="(login.loginForm.$submitted || login.loginForm.email.$touched) && login.loginForm.email.$invalid" class="error">
+            <div ng-message="required">Please enter a value for this field.</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="password">Password</label>
+          <p class="control">
+            <input class="input" type="password" name="password" id="password" ng-model="login.credentials.password" required>
+          </p>
+          <div ng-messages="login.loginForm.password.$error" role="alert" ng-show="(login.loginForm.$submitted || login.loginForm.password.$touched) && login.loginForm.password.$invalid" class="error">
+            <div ng-message="required">Please enter a value for this field.</div>
+          </div>
+        </div>
+        <div class="field">
+          <p class="control">
+            <input type="submit" class="button  is-info is-fullwidth" value="Login">
+          </p>
+        </div>
+      </form>
+      <div id="register">
+        <h3>First time?<a ui-sref="register"> Register</a> with us!</h3>
+      </div>
+    </div>
+  </div>
+</section>

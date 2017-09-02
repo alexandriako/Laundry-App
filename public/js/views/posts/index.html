@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+
+<h2 class="centered backgroundColor">Newsfeed</h2>
+
+<div class="section">
+  <div class="field">
+    <div class="control">
+      <input type="text" class="input is-primary" ng-model="postsIndex.q" placeholder="Filter posts by description..">
+    </div>
+  </div><br>
+
+  <div class="columns is-multiline">
+    <div ng-repeat="post in postsIndex.filtered track by $index" class="column is-half box postsMargin">
+
+      <div>
+        <h2>{{ post.headline }}</h2>
+        <img class="centered" ng-src="{{ post.image }}">
+        <h2>{{ post.description }}</h2>
+        <a href="{{ post.src }}" target="_blank">{{ post.src }}</a>
+        <h3>@{{ post.user.username }}</h3>
+
+        <button class="button is-small is-danger is-outlined" ng-click="postsIndex.delete(post)" ng-if="main.isAuthenticated() && main.currentUser.id === post.user.id">Delete</button>
+
+        <div>
+
+
+        <div class="scroll softBorder">
+
+          <div ng-repeat="comment in post.comments">
+
+            <img class="inlineBlock image is-32x32" ng-src="{{comment.user.image.url}}" alt="image">
+
+            <p class="inlineBlock"><strong><a ui-sref="profile({ id: comment.user.id })">@{{ comment.user.username }}:</a></strong></p>
+            <p class="inlineBlock">{{ comment.body }}</p>
+            <button ng-click="postsIndex.deleteComment(comment)" ng-if="main.isAuthenticated() && main.currentUser.id === comment.user_id" class="noBorder button is-small is-danger is-outlined"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <hr>
+          </div>
+        </div>
+
+        <div ng-if="main.isAuthenticated()">
+          <form ng-submit="postsIndex.addComment(post)">
+            <textarea class="comment" ng-model="postsIndex.newComment.body"></textarea>
+            <button class="button is-primary is-outlined noBorder commentButton"><i class="fa fa-commenting-o" aria-hidden="true"></i></button>
+          </form>
+        </div>
+
+        <a ng-click="postsIndex.liked(post); toggle = ! toggle" ng-if="main.isAuthenticated()" ng-class="{'like' : toggle }" class="fa fa-thumbs-o-up fa-2x">Like</a><span> {{ post.posts_liked_ids.length }} </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
